@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="ca">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Qüestionari de Geometria - 2n d'ESO</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f0f8ff;
+            color: #333;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        h1 {
+            text-align: center;
+            color: #2c3e50;
+        }
+        .question-block {
+            margin-bottom: 25px;
+            padding: 15px;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            background-color: #fafafa;
+        }
+        .question-text {
+            font-weight: bold;
+            font-size: 1.1em;
+            margin-bottom: 10px;
+        }
+        .options {
+            list-style-type: none;
+            padding: 0;
+        }
+        .options li {
+            margin-bottom: 8px;
+        }
+        button {
+            background-color: #3498db;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1em;
+            margin-top: 10px;
+        }
+        button:hover {
+            background-color: #2980b9;
+        }
+        .feedback {
+            margin-top: 10px;
+            font-weight: bold;
+            font-size: 1.2em;
+        }
+        .correct {
+            color: #27ae60;
+        }
+        .incorrect {
+            color: #c0392b;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Qüestionari de Geometria - 2n ESO</h1>
+    <p>Respon les següents 25 preguntes sobre rectes, angles, polígons, perímetres i àrees. Tria una opció i fes clic a "Comprova".</p>
+
+    <div id="quiz-container">
+        </div>
+</div>
+
+<script>
+    const questions = [
+        { q: "1. Dos angles són complementaris si sumen...", options: ["90°", "180°", "360°", "45°"], answer: 0 },
+        { q: "2. Com s'anomenen dos angles que sumen 180°?", options: ["Complementaris", "Suplementaris", "Oposats pel vèrtex", "Consecutius"], answer: 1 },
+        { q: "3. Quina és la suma dels angles interiors de qualsevol triangle?", options: ["90°", "180°", "270°", "360°"], answer: 1 },
+        { q: "4. Un triangle amb els tres costats desiguals s'anomena:", options: ["Equilàter", "Isòsceles", "Escalè", "Rectangle"], answer: 2 },
+        { q: "5. Quin nom rep el triangle que té un angle de més de 90°?", options: ["Acutangle", "Rectangle", "Obtusangle", "Equilàter"], answer: 2 },
+        { q: "6. En un triangle rectangle, com s'anomena el costat més llarg?", options: ["Catet", "Hipotenusa", "Apotema", "Diagonal"], answer: 1 },
+        { q: "7. Quina és la fórmula de l'àrea d'un triangle?", options: ["base × altura", "(base × altura) / 2", "costat × costat", "Perímetre × apotema / 2"], answer: 1 },
+        { q: "8. Quina és la suma dels angles interiors d'un quadrilàter?", options: ["180°", "270°", "360°", "720°"], answer: 2 },
+        { q: "9. Un paral·lelogram amb els 4 costats iguals i els 4 angles rectes és un:", options: ["Rombe", "Rectangle", "Quadrat", "Trapezi"], answer: 2 },
+        { q: "10. Com calculem l'àrea d'un rectangle?", options: ["base × altura", "Diagonal major × diagonal menor / 2", "costat × 4", "(base major + base menor) × altura / 2"], answer: 0 },
+        { q: "11. Quina és la fórmula per calcular l'àrea d'un rombe?", options: ["base × altura", "(Diagonal major × diagonal menor) / 2", "costat × costat", "Perímetre × apotema"], answer: 1 },
+        { q: "12. Un quadrilàter que només té dos costats paral·lels s'anomena:", options: ["Romboide", "Trapezi", "Trapezoide", "Quadrat"], answer: 1 },
+        { q: "13. Què és un polígon regular?", options: ["El que té tots els costats iguals i angles diferents", "El que té tots els angles iguals i costats diferents", "El que té tots els costats i tots els angles iguals", "Qualsevol polígon de més de 4 costats"], answer: 2 },
+        { q: "14. Com s'anomena un polígon de 5 costats?", options: ["Hexàgon", "Pentàgon", "Heptàgon", "Octàgon"], answer: 1 },
+        { q: "15. Com s'anomena el segment que va del centre d'un polígon regular a la meitat d'un costat?", options: ["Radi", "Diagonal", "Apotema", "Vèrtex"], answer: 2 },
+        { q: "16. Quina és l'àrea d'un polígon regular?", options: ["Perímetre × altura", "(Perímetre × apotema) / 2", "Suma dels costats", "base × altura / 2"], answer: 1 },
+        { q: "17. Quin és el perímetre d'un hexàgon regular de 4 cm de costat?", options: ["10 cm", "16 cm", "20 cm", "24 cm"], answer: 3 },
+        { q: "18. Si l'àrea d'un rectangle és de 20 cm² i la base mesura 5 cm, quant mesura l'altura?", options: ["4 cm", "5 cm", "10 cm", "15 cm"], answer: 0 },
+        { q: "19. Com es diu el segment que uneix dos vèrtexs no consecutius d'un polígon?", options: ["Costat", "Apotema", "Diagonal", "Radi"], answer: 2 },
+        { q: "20. Un romboide és un:", options: ["Polígon regular", "Trapezi", "Paral·lelogram", "Triangle especial"], answer: 2 },
+        { q: "21. Si el perímetre d'un quadrat és 40 cm, quant mesura el seu costat?", options: ["5 cm", "10 cm", "20 cm", "40 cm"], answer: 1 },
+        { q: "22. Quina àrea té el quadrat de la pregunta anterior (costat de 10 cm)?", options: ["20 cm²", "40 cm²", "100 cm²", "1000 cm²"], answer: 2 },
+        { q: "23. L'àrea d'un trapezi es calcula amb la fórmula:", options: ["base × altura", "(Base major + base menor) × altura / 2", "Diagonal × diagonal / 2", "Perímetre / 2"], answer: 1 },
+        { q: "24. Quants graus sumen els angles interiors d'un pentàgon?", options: ["360°", "540°", "720°", "180°"], answer: 1 },
+        { q: "25. La circumferència que passa per tots els vèrtexs d'un polígon regular s'anomena:", options: ["Inscrita", "Circumscrita", "Concéntrica", "Tangent"], answer: 1 }
+    ];
+
+    const container = document.getElementById("quiz-container");
+
+    questions.forEach((item, index) => {
+        const block = document.createElement("div");
+        block.className = "question-block";
+        
+        const qText = document.createElement("div");
+        qText.className = "question-text";
+        qText.innerText = item.q;
+        block.appendChild(qText);
+
+        const optionsList = document.createElement("ul");
+        optionsList.className = "options";
+        
+        item.options.forEach((opt, optIndex) => {
+            const li = document.createElement("li");
+            const label = document.createElement("label");
+            const radio = document.createElement("input");
+            radio.type = "radio";
+            radio.name = "question" + index;
+            radio.value = optIndex;
+            
+            label.appendChild(radio);
+            label.appendChild(document.createTextNode(" " + opt));
+            li.appendChild(label);
+            optionsList.appendChild(li);
+        });
+        
+        block.appendChild(optionsList);
+
+        const btn = document.createElement("button");
+        btn.innerText = "Comprova";
+        
+        const feedback = document.createElement("div");
+        feedback.className = "feedback";
+
+        btn.onclick = () => {
+            const selected = document.querySelector(`input[name="question${index}"]:checked`);
+            if (!selected) {
+                feedback.innerHTML = "<span style='color:orange;'>Selecciona una opció primer!</span>";
+                return;
+            }
+            if (parseInt(selected.value) === item.answer) {
+                feedback.innerHTML = "<span class='correct'>👏👏👏 Molt bé!</span>";
+            } else {
+                feedback.innerHTML = "<span class='incorrect'>OOOOOOOOHHHHH QUINA PENA!</span>";
+            }
+        };
+
+        block.appendChild(btn);
+        block.appendChild(feedback);
+        container.appendChild(block);
+    });
+</script>
+
+</body>
+</html>
